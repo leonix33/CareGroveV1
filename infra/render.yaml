@@ -1,0 +1,36 @@
+services:
+  - type: web
+    name: caregrove-web
+    runtime: node
+    rootDir: apps/web
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        sync: false
+
+  - type: web
+    name: caregrove-api
+    runtime: python
+    rootDir: services/api
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: caregrove-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ENVIRONMENT
+        value: production
+      - key: FRONTEND_URL
+        sync: false
+      - key: MONTHLY_PRICE_USD
+        sync: false
+      - key: ALLOW_DEMO_PAYMENTS
+        value: "false"
+
+databases:
+  - name: caregrove-db
+    plan: free
