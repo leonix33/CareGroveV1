@@ -11,8 +11,13 @@ class Settings(BaseSettings):
     jwt_secret: str = "dev-only-change-me"
     jwt_days: int = 30
     frontend_url: str = "http://localhost:3000"
+    render_external_url: str = ""
     monthly_price_usd: str = ""
     allow_demo_payments: bool = True
+
+    @property
+    def public_origin(self) -> str:
+        return (self.render_external_url or self.frontend_url).rstrip("/")
 
     @property
     def sqlalchemy_url(self) -> str:

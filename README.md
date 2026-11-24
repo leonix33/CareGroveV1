@@ -28,7 +28,11 @@ Sample password for every demo account: `CareGrove-demo-12`
 - Provider: `oak@caregrove.demo` (Bright Path Services)
 - Staff: `admin@caregrove.demo`
 
-The API uses a local SQLite file until `DATABASE_URL` points at Postgres. `infra/docker-compose.yml` starts Postgres on port 5433. `infra/render.yaml` is the Render blueprint.
+The API uses a local SQLite file until `DATABASE_URL` points at Postgres. `infra/docker-compose.yml` starts Postgres on port 5433.
+
+## Production
+
+`infra/render.yaml` runs one always-on container (the site and the API) plus Postgres. Render gives the site an `onrender.com` address. A custom domain can be added on that service later. Demo sign-in still works. Paid membership checkout stays closed until PayPal and the monthly price are connected.
 
 ## Matching rule
 
